@@ -1,17 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:video_player/video_player.dart';
 import 'package:youtube_clone/utils/helpers.dart';
+import 'package:youtube_clone/models/video.dart';
+import 'package:youtube_clone/utils/constants.dart';
 
 class VideoCard extends StatefulWidget {
-  String videoUrl;
-  String videoTitle;
-  String channelName;
+  Video videoDetails;
 
   VideoCard({
     super.key,
-    required this.channelName,
-    required this.videoTitle,
-    required this.videoUrl,
+    required this.videoDetails,
   });
 
   @override
@@ -19,22 +17,13 @@ class VideoCard extends StatefulWidget {
 }
 
 class _VideoCardState extends State<VideoCard> {
-  late VideoPlayerController _controller;
-
   @override
   void initState() {
     super.initState();
-    _controller = VideoPlayerController.networkUrl(
-      Uri.parse(widget.videoUrl),
-    );
-    _controller.initialize().then((_) {
-      setState(() {});
-    });
   }
 
   @override
   void dispose() {
-    _controller.dispose();
     super.dispose();
   }
 
@@ -49,21 +38,24 @@ class _VideoCardState extends State<VideoCard> {
             height: 210,
             child: Stack(
               children: [
-                _controller.value.isInitialized
-                    ? VideoPlayer(_controller)
-                    : CircularProgressIndicator(),
-                Positioned(
-                  child: Container(
-                    padding: EdgeInsets.symmetric(vertical: 5, horizontal: 8),
-                    decoration: BoxDecoration(
-                      color: Colors.black54,
-                      borderRadius: BorderRadius.all(Radius.circular(5)),
-                    ),
-                    child: Text(formatDuration(_controller.value.duration)),
-                  ),
-                  bottom: 10,
-                  right: 10,
-                )
+                Image.network(
+                  "${Constants.baseUrl}${widget.videoDetails.thumbnail}",
+                  width: MediaQuery.of(context).size.width,
+                  height: 210,
+                  fit: BoxFit.cover,
+                ),
+                // Positioned(
+                //   child: Container(
+                //     padding: EdgeInsets.symmetric(vertical: 5, horizontal: 8),
+                //     decoration: BoxDecoration(
+                //       color: Colors.black54,
+                //       borderRadius: BorderRadius.all(Radius.circular(5)),
+                //     ),
+                //     child: Text(formatDuration(_controller.value.duration)),
+                //   ),
+                //   bottom: 10,
+                //   right: 10,
+                // )
               ],
             ),
           ),
@@ -82,7 +74,7 @@ class _VideoCardState extends State<VideoCard> {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Text(
-                        widget.videoTitle,
+                        widget.videoDetails.videoTitle,
                         style: TextStyle(
                           fontSize: 16,
                           fontWeight: FontWeight.bold,
@@ -92,7 +84,7 @@ class _VideoCardState extends State<VideoCard> {
                       ),
                       SizedBox(height: 4),
                       Text(
-                        "${widget.channelName} - 7 days ago",
+                        "${widget.videoDetails.channelName} - 7 days ago",
                         style: TextStyle(
                           fontSize: 12,
                           color: Colors.grey,

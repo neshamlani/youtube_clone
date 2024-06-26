@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:video_player/video_player.dart';
 import 'package:visibility_detector/visibility_detector.dart';
+import 'package:youtube_clone/utils/constants.dart';
 
 class CustomShortsPlayer extends StatefulWidget {
   String videoUrl;
@@ -24,7 +25,7 @@ class _CustomShortsPlayerState extends State<CustomShortsPlayer> {
   void initState() {
     super.initState();
     _controller = VideoPlayerController.networkUrl(
-      Uri.parse(widget.videoUrl),
+      Uri.parse("${Constants.baseUrl}${widget.videoUrl}"),
     );
     _controller.initialize().then((_) {
       setState(() {});
@@ -54,6 +55,8 @@ class _CustomShortsPlayerState extends State<CustomShortsPlayer> {
               }
             },
           )
-        : CircularProgressIndicator();
+        : Center(
+            child: CircularProgressIndicator(),
+          );
   }
 }

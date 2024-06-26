@@ -1,16 +1,19 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:youtube_clone/providers/video_provider.dart';
 import 'app_pages.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  // runApp(
-  //   MultiProvider(
-  //     providers: [],
-  //     child: const MyApp(),
-  //   ),
-  // );
-  runApp(const MyApp());
+  runApp(
+    MultiProvider(
+      providers: [
+        ChangeNotifierProvider(create: (_) => VideoProvider()),
+      ],
+      child: const MyApp(),
+    ),
+  );
+  // runApp(const MyApp());
 }
 
 class MyApp extends StatelessWidget {

@@ -1,4 +1,6 @@
 class Constants {
+  static const String baseUrl = "https://youtube-clone-be-ten.vercel.app/";
+
   static const String portraitVideo =
       'https://videos.pexels.com/video-files/2795396/2795396-sd_360_640_25fps.mp4';
   static const String sampleVideo =
